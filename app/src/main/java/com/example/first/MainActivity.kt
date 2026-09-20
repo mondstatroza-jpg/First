@@ -16,27 +16,12 @@ class MainActivity : AppCompatActivity() {
         val textResult = findViewById<TextView>(R.id.textResult)
 
         buttonOK.setOnClickListener {
-            val input = edit1.text.toString()
-            if (input.isEmpty()) {
-                textResult.text = "Введите число"
-                return@setOnClickListener
+            val input = edit1.text.toString().trim()
+            if (input.equals("d", ignoreCase = true)) {
+                textResult.text = "это Дуб"
+            } else {
+                textResult.text = "Неизвестное растение"
             }
-            val number = input.toIntOrNull()
-            if (number == null) {
-                textResult.text = "Ошибка: введите целое число"
-                return@setOnClickListener
-            }
-            val day = when (number) {
-                1 -> "Понедельник"
-                2 -> "Вторник"
-                3 -> "Среда"
-                4 -> "Четверг"
-                5 -> "Пятница"
-                6 -> "Суббота"
-                7 -> "Воскресенье"
-                else -> "Неверный номер (1-7)"
-            }
-            textResult.text = day
         }
     }
 }
