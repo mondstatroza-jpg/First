@@ -16,19 +16,21 @@ class MainActivity : AppCompatActivity() {
         val textResult = findViewById<TextView>(R.id.textResult)
 
         buttonOK.setOnClickListener {
-            val number = edit1.text.toString().toIntOrNull()
-            if (number == null) {
-                textResult.text = "Введите номер (1-4)"
+            val input = edit1.text.toString()
+            if (input.length != 1) {
+                textResult.text = "Введите один символ"
                 return@setOnClickListener
             }
-            val season = when (number) {
-                1 -> "зима"
-                2 -> "весна"
-                3 -> "лето"
-                4 -> "осень"
-                else -> "Ошибка"
+            val ch = input[0]
+            if (ch !in 'A'..'Z') {
+                textResult.text = "Не латинская прописная буква"
+                return@setOnClickListener
             }
-            textResult.text = season
+            if (ch in setOf('L', 'M', 'K', 'D')) {
+                textResult.text = "Это согласные буквы"
+            } else {
+                textResult.text = "Возможно, это гласные буквы"
+            }
         }
     }
 }
