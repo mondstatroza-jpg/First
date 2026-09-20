@@ -16,19 +16,17 @@ class MainActivity : AppCompatActivity() {
         val textResult = findViewById<TextView>(R.id.textResult)
 
         buttonOK.setOnClickListener {
-            val age = edit1.text.toString().toIntOrNull()
-            if (age == null) {
-                textResult.text = "Введите целое число"
+            val input = edit1.text.toString()
+            if (input.length != 1) {
+                textResult.text = "Введите один символ"
                 return@setOnClickListener
             }
-            val message = when {
-                age <= 20 -> "Вы слишком молоды!"
-                age == 30 || age == 40 || age == 50 || age == 60 -> "Поздравляем с повышением!"
-                age == 65 -> "Преподносим вам золотые часы!"
-                age > 65 -> "Вы слишком стары!"
-                else -> "Продолжайте накапливать опыт!"
+            val ch = input[0]
+            when {
+                ch in '0'..'9' -> textResult.text = "Это цифра!"
+                ch == '&' || ch == '#' || ch == '<' -> textResult.text = "Это спец символ!"
+                else -> textResult.text = "Непредусмотренный вариант!"
             }
-            textResult.text = message
         }
     }
 }
