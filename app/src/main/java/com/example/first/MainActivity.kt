@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import kotlin.math.sqrt
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,38 +14,36 @@ class MainActivity : AppCompatActivity() {
 
         val edit1 = findViewById<EditText>(R.id.edit1)
         val edit2 = findViewById<EditText>(R.id.edit2)
-        val edit3 = findViewById<EditText>(R.id.edit3)
         val buttonOK = findViewById<Button>(R.id.buttonOK)
         val textResult = findViewById<TextView>(R.id.textResult)
 
         buttonOK.setOnClickListener {
-            val variant = edit1.text.toString().toIntOrNull()
-            if (variant == null) {
-                textResult.text = "Введите номер варианта (1 или 2)"
+            val letter = edit1.text.toString().trim().lowercase()
+            val value = edit2.text.toString().toDoubleOrNull()
+            if (value == null) {
+                textResult.text = "Введите значение"
                 return@setOnClickListener
             }
-            when (variant) {
-                1 -> {
-                    val a = edit2.text.toString().toDoubleOrNull()
-                    val h = edit3.text.toString().toDoubleOrNull()
-                    if (a == null || h == null) {
-                        textResult.text = "Введите сторону и высоту"
-                        return@setOnClickListener
-                    }
-                    val s = a * h
-                    textResult.text = "Площадь = $s"
+            when (letter) {
+                "a" -> {
+                    val a = value
+                    val c = a * sqrt(2.0)
+                    val s = a * a / 2
+                    textResult.text = "a=$a, c=$c, S=$s"
                 }
-                2 -> {
-                    val d1 = edit2.text.toString().toDoubleOrNull()
-                    val d2 = edit3.text.toString().toDoubleOrNull()
-                    if (d1 == null || d2 == null) {
-                        textResult.text = "Введите диагонали"
-                        return@setOnClickListener
-                    }
-                    val s = d1 * d2 / 2
-                    textResult.text = "Площадь = $s"
+                "c" -> {
+                    val c = value
+                    val a = c / sqrt(2.0)
+                    val s = a * a / 2
+                    textResult.text = "a=$a, c=$c, S=$s"
                 }
-                else -> textResult.text = "Неверный вариант"
+                "s" -> {
+                    val s = value
+                    val a = sqrt(2 * s)
+                    val c = a * sqrt(2.0)
+                    textResult.text = "a=$a, c=$c, S=$s"
+                }
+                else -> textResult.text = "Неверная буква (a, c, S)"
             }
         }
     }
