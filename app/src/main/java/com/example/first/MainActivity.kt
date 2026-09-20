@@ -16,21 +16,19 @@ class MainActivity : AppCompatActivity() {
         val textResult = findViewById<TextView>(R.id.textResult)
 
         buttonOK.setOnClickListener {
-            val input = edit1.text.toString()
-            if (input.length != 1) {
-                textResult.text = "Введите один символ"
+            val age = edit1.text.toString().toIntOrNull()
+            if (age == null) {
+                textResult.text = "Введите целое число"
                 return@setOnClickListener
             }
-            val ch = input[0]
-            if (ch !in 'A'..'Z') {
-                textResult.text = "Не латинская прописная буква"
-                return@setOnClickListener
+            val message = when {
+                age <= 20 -> "Вы слишком молоды!"
+                age == 30 || age == 40 || age == 50 || age == 60 -> "Поздравляем с повышением!"
+                age == 65 -> "Преподносим вам золотые часы!"
+                age > 65 -> "Вы слишком стары!"
+                else -> "Продолжайте накапливать опыт!"
             }
-            if (ch in setOf('L', 'M', 'K', 'D')) {
-                textResult.text = "Это согласные буквы"
-            } else {
-                textResult.text = "Возможно, это гласные буквы"
-            }
+            textResult.text = message
         }
     }
 }
